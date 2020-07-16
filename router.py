@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route("/accession_list", methods=['GET','POST'])
 def accession_list():
     app.logger.info('Request received')
-    directory = "/Users/xjw/Documents/tuixiang/jefferson_accession_list/router/"
+    directory = "/media/tx-deepocean/Data/TMP"
     filename = "accession_list.txt"
     cmd = "rm -f " + directory + filename
     os.system(cmd)
@@ -35,4 +35,3 @@ if __name__ == "__main__":
     app.logger.info("Initiated....")
 
     app.run(host="0.0.0.0", port=5002)
-    # new_upload()
