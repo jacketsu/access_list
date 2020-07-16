@@ -15,13 +15,15 @@ def accession_list():
     cmd = "rm -f " + directory + filename
     os.system(cmd)
     cmd = "ls " + directory + " -lt > " + filename
+    download_directory = "/media/tx-deepocean/Data/accession_list_server/access_list"
     os.system(cmd)
+    app.logger.info('created a file')
     # f=open(filename,'a')
     # for d in os.listdir(directory):
     #     app.logger.info(d)
     #     f.write(str(d))
     #     f.write('\n')
-    return send_from_directory(directory, filename, as_attachment=False)
+    return send_from_directory(download_directory, filename, as_attachment=False)
     
 
 if __name__ == "__main__":
