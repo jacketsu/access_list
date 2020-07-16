@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route("/accession_list", methods=['GET','POST'])
 def accession_list():
     app.logger.info('Request received')
-    directory = "/media/tx-deepocean/Data/TMP"
+    directory = "/media/tx-deepocean/Data/TMP/"
     filename = "accession_list.txt"
     cmd = "rm -f " + directory + filename
     os.system(cmd)
