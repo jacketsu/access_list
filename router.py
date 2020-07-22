@@ -37,7 +37,7 @@ def accession_list_v2():
                 continue
             pid_f = os.listdir("/".join([directory, pid]))
             path = "/".join([directory, pid]) 
-            while os.path.isdir("/".join([path, pid_f[0]])):
+            while len(pid_f) > 0 and os.path.isdir("/".join([path, pid_f[0]])):
                 path = "/".join([path, pid_f[0]])
                 pid_f = os.listdir(path)
             count = len(pid_f)
