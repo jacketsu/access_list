@@ -31,18 +31,23 @@ def accession_list_v2():
     app.logger.info('v2 Request received')
     directory = "/media/tx-deepocean/Data/TMP"
     filename = "accession_list_v2.txt"
-    with open(filename, "w") as file:
-        for pid in os.listdir(directory):
-            if "." in pid:
-                continue
-            pid_f = os.listdir("/".join([directory, pid]))
-            path = "/".join([directory, pid]) 
-            while len(pid_f) > 0 and os.path.isdir("/".join([path, pid_f[0]])):
-                path = "/".join([path, pid_f[0]])
-                pid_f = os.listdir(path)
-            count = len(pid_f)
+    folders = []
+    for pid in os.listdir(directory):
+        if "." in pid:
+            continue
+        path = "/".join([directory, pid])
+        pid_f = os.listdir(path)
+        path = "/".join([path, pid_f])
+        for subf in os.listdir(path):
+            fname = "/".join([pid, subf])
+            count = len(subf)
             mtime = time.ctime(os.path.getmtime("/".join([directory, pid])))
-            file.write(str(pid) + "       " + str(mtime) + "     " + str(count) + "\n")
+            folders.append([fname, mtime, count])
+    sorted(folders, key=lambda f:f[1])
+
+    with open(filename, "w") as file:
+        for r in folders:
+            file.write(str(r[0]) + "       " + str(r[1]) + "     " + str(r[2]) + "\n")
 
     download_directory = "/media/tx-deepocean/Data/accession_list_server/access_list"
     app.logger.info('created a v2 file')
