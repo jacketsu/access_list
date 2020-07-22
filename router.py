@@ -37,7 +37,7 @@ def accession_list_v2():
             continue
         path = "/".join([directory, pid])
         pid_f = os.listdir(path)
-        path = "/".join([path, pid_f])
+        path = "/".join([path, pid_f[0]])
         for subf in os.listdir(path):
             fname = "/".join([pid, subf])
             count = len(subf)
