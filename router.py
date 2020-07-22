@@ -42,7 +42,7 @@ def accession_list_v2():
                 pid_f = os.listdir(path)
             count = len(pid_f)
             mtime = time.ctime(os.path.getmtime("/".join([directory, pid])))
-            file.write(str(pid) + "       " + str(mtime) + "     " + str(count))
+            file.write(str(pid) + "       " + str(mtime) + "     " + str(count) + "\n")
 
     download_directory = "/media/tx-deepocean/Data/accession_list_server/access_list"
     app.logger.info('created a v2 file')
