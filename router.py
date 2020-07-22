@@ -33,10 +33,10 @@ def accession_list_v2():
     filename = "accession_list_v2.txt"
     with open(filename, "w") as file:
         for pid in os.listdir(directory):
-            if pid.contains("."):
+            if "." in pid:
                 continue
             pid_f = os.listdir("/".join([directory, pid]))
-            path = "/".join([directory, pid])
+            path = "/".join([directory, pid]) 
             while len(pid_f) == 1:
                 path = "/".join([path, pid_f[0]])
                 pid_f = os.listdir(path)
