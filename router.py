@@ -27,7 +27,7 @@ def accession_list():
     return send_from_directory(download_directory, filename, as_attachment=False)
 
 @app.route("/accession_list_v2", methods=['GET','POST'])
-def accession_list():
+def accession_list_v2():
     app.logger.info('v2 Request received')
     directory = "/media/tx-deepocean/Data/TMP"
     filename = "accession_list_v2.txt"
