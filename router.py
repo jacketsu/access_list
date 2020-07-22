@@ -44,7 +44,7 @@ def accession_list_v2():
             # mtime = time.ctime(os.path.getmtime("/".join([directory, pid])))
             mtime = os.path.getmtime("/".join([directory, pid]))
             folders.append([fname, mtime, count])
-    sorted(folders, key=lambda f:f[1], reversed=True)
+    sorted(folders, key=lambda f:-f[1])
 
     with open(filename, "w") as file:
         for r in folders:
