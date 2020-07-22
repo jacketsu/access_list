@@ -43,12 +43,12 @@ def accession_list_v2():
             count = len(os.listdir("/".join([path, subf])))
             # mtime = time.ctime(os.path.getmtime("/".join([directory, pid])))
             mtime = os.path.getmtime("/".join([directory, pid]))
-            folders.append([fname, mtime, count])
-    sorted(folders, key=lambda f:-f[1])
+            folders.append([fname, mtime, count, pid])
+    sorted(folders, key=lambda f:-os.path.getmtime("/".join([directory, f[3]])))
 
     with open(filename, "w") as file:
         for r in folders:
-            file.write(str(r[0]) + " " * 30 + str(time.ctime(r[1])) + " " * 30 + str(r[2]) + "\n")
+            file.write(str(r[0]) + " " * (120 - len(str(r[0]))) + str(time.ctime(r[1])) + " " * 30 + str(r[2]) + "\n")
 
     download_directory = "/media/tx-deepocean/Data/accession_list_server/access_list"
     app.logger.info('created a v2 file')
