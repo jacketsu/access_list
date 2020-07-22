@@ -2,6 +2,7 @@ from flask import Flask, request
 from requests import post, delete
 import json
 import os
+import time
 import logging
 from flask import send_file, send_from_directory
 
@@ -18,6 +19,33 @@ def accession_list():
     download_directory = "/media/tx-deepocean/Data/accession_list_server/access_list"
     os.system(cmd)
     app.logger.info('created a file')
+    # f=open(filename,'a')
+    # for d in os.listdir(directory):
+    #     app.logger.info(d)
+    #     f.write(str(d))
+    #     f.write('\n')
+    return send_from_directory(download_directory, filename, as_attachment=False)
+
+@app.route("/accession_list_v2", methods=['GET','POST'])
+def accession_list():
+    app.logger.info('v2 Request received')
+    directory = "/media/tx-deepocean/Data/TMP"
+    filename = "accession_list_v2.txt"
+    with open(filename, "w") as file:
+        for pid in os.listdir(directory):
+            if pid.contains("."):
+                continue
+            pid_f = os.listdir("/".join([directory, pid]))
+            path = "/".join([directory, pid])
+            while len(pid_f) == 1:
+                path = "/".join([path, pid_f[0]])
+                pid_f = os.listdir(path)
+            count = len(pid_f)
+            mtime = time.ctime(os.path.getmtime("/".join([directory, pid])))
+            file.write(str(pid) + "       " + str(mtime) + "     " + str(count))
+
+    download_directory = "/media/tx-deepocean/Data/accession_list_server/access_list"
+    app.logger.info('created a v2 file')
     # f=open(filename,'a')
     # for d in os.listdir(directory):
     #     app.logger.info(d)
