@@ -46,9 +46,15 @@ def accession_list_v2():
             folders.append([fname, mtime, count, pid])
     folders = sorted(folders, key=lambda f:-os.path.getmtime("/".join([directory, f[3]])))
 
+    #latest time
+    latest_time = folders[0][1]
+    gap_time = 60.0 * 60.0 * 24.0 * 8.0
+
     with open(filename, "w") as file:
         for r in folders:
-            file.write(str(r[0]) + " " * (120 - len(str(r[0]))) + str(time.ctime(r[1])) + " " * 30 + str(r[2]) + "\n")
+            #get latest 7 days r
+            if latest_time - r[1] <= gap_time:
+                file.write(str(r[0]) + " " * (120 - len(str(r[0]))) + str(time.ctime(r[1])) + " " * 30 + str(r[2]) + "\n")
 
     download_directory = "/media/tx-deepocean/Data/accession_list_server/access_list"
     app.logger.info('created a v2 file')
